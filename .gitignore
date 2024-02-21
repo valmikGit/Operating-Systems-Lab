@@ -1,3 +1,7 @@
 Notes.docx
 *.pdf
 Codes For Understanding
+*.out
+*.txt
+hardlink
+softlink
