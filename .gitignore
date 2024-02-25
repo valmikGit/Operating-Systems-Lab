@@ -5,3 +5,5 @@ Codes For Understanding
 *.txt
 hardlink
 softlink
+*.bin
+valmik

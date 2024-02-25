@@ -11,32 +11,32 @@ int main() {
     char file_Name[100];
     printf("Enter the file name: ");
     scanf("%s", file_Name);
-    int fd = open(file_Name, O_RDWR);
+    int fd = open(file_Name, O_RDWR | O_APPEND);
     int x = fcntl(fd, F_GETFL);
     close(fd);
     printf("x = %d\n", x);
-    if (x == 32768)
+    if (x == 0) // Done
     {
         printf("O_RDONLY\n");
     }
-    else if (x == 32769)
+    else if (x == 1) // Done
     {
-        printf("O_WRONLY");
+        printf("O_WRONLY\n");
     }
-    else if (x == 32770)
+    else if (x == 2) // Done
     {
         printf("O_RDWR\n");
     }
-    else if (x == 32793)
+    else if (x == 1025) // Done
     {
         printf("O_WRONLY | O_APPEND\n");
     }
-    else if (x == 32794)
+    else if (x == 1026) // Done
     {
-        printf("O_RDWR | O_APPEND");
+        printf("O_RDWR | O_APPEND\n");
     }
     else
     {
-        printf("Unknown mode");
+        printf("Unknown mode\n");
     }
 }
