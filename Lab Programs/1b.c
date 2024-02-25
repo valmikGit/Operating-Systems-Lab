@@ -18,7 +18,7 @@ int main() {
     printf("Enter the file name.\n");
     scanf("%s", entered_Name);
     printf("Enter the hard link name.\n");
-    scanf("%s", soft_File);
+    scanf("%s", hard_File);
     int x = link(entered_Name, hard_File);
     printf("Return value = %d\n");
 }

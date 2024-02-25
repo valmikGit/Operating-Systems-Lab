@@ -17,6 +17,6 @@ int main() {
     char fifo_File[1000];
     printf("Enter the file name.\n");
     scanf("%s", entered_Name);
-    int x = mknod(entered_Name, S_FIFO, 0);
+    int x = mknod(entered_Name, S_IFIFO, 0);
     printf("Return value = %d\n", x);
 }
