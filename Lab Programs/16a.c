@@ -25,7 +25,7 @@ int main() {
     int x = fcntl(fd, F_SETLKW, &lk);
     printf("%d\n", x);
     printf("Press enter to unlock\n");
-
+    getchar();
     while (getchar() != '\n')
     {
         getchar();

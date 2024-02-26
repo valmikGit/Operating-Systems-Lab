@@ -9,7 +9,7 @@ descriptor value using the creat() system call.
 */
 
 int main() {
-    // Create a file named "example.txt" with write-only permissions
+    // Create a file named "example.txt" with read, write and execute permissions
     int fd = creat("example.txt", 0666);
     
     if (fd == -1) {

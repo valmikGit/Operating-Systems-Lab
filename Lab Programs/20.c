@@ -4,6 +4,7 @@ parent and child process IDs.
 */
 
 #include <stdio.h>
+#include<fcntl.h>
 #include <unistd.h>
 
 int main() {

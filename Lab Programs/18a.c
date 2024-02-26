@@ -28,7 +28,7 @@ int main() {
     printf("Inside Critical Section\n");
     fcntl(fd, F_SETLKW, &lock);
     int tokennum = 0;
-    lseek(fd, &tokennum, sizeof(int));
+    lseek(fd, (off_t)&tokennum, sizeof(int));
     tokennum++;
 
     printf("Token number is: %d\n", tokennum);

@@ -14,7 +14,7 @@ close the file.
 */
 
 int main() {
-    int fd = open("ticket.txt", O_RDWR);
+    int fd = open("ticket.txt", O_RDWR| O_CREAT,0644);
     struct flock lock;
     lock.l_type = F_WRLCK;
     lock.l_whence = SEEK_SET;
