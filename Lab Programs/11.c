@@ -11,19 +11,20 @@ b. Use dup2
 c. Use fcntl
 */
 
-int main() {
+int main()
+{
     char buffer_1[1000];
     char buffer_2[1000];
     char buffer_3[1000];
     char buffer_4[1000];
-    int fd_1 = open("xyz3", O_WRONLY | O_APPEND);
+    int fd_1 = open("xyz2.txt", O_CREAT | O_WRONLY | O_APPEND);
     int fd_2 = dup(fd_1);
-    write(fd_1, "Baa Baa Black Sheep\n", 20);
-    write(fd_2, "Have you any wool?\n", 19);
+    write(fd_1, "Hello How are you\n", 19);
+    write(fd_2, "Did you have lunch?\n", 21);
     dup2(fd_1, 4);
-    write(4, "Yes sir, yes sir\n", 16);
+    write(4, "Yes sir, thanks for asking\n", 28);
     int fd_3 = fcntl(fd_1, F_DUPFD, 0);
-    write(fd_3, "Three bags full\n", 16);
+    write(fd_3, "Two bowls of porridge\n", 23);
     close(fd_1);
     close(fd_2);
     close(4);
