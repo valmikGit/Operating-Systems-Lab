@@ -14,7 +14,7 @@ modify/access it to avoid race conditions
 */
 
 int main() {
-    int fd = open("18.txt", O_RDWR);
+    int fd = open("valmik.txt", O_RDWR);
     int input;
     printf("Choose a record: 1 or 2 or 3: ");
     scanf("%d", &input);
