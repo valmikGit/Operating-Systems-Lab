@@ -17,7 +17,7 @@ int main() {
     } else if (child_pid == 0) {
         // Child process
         printf("Child process (PID = %d) sleeping...\n", getpid());
-        sleep(10); // Child process sleeps for 10 seconds
+        sleep(15); // Child process sleeps for 10 seconds
         printf("Child process (PID = %d) exiting...\n", getpid());
     } else {
         // Fork error
