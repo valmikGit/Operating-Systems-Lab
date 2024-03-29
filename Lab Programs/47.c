@@ -1,9 +1,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <sys/types.h>
 #include <sys/ipc.h>
 #include <sys/shm.h>
-#include <sys/types.h>
 #include <unistd.h>
 
 #define SHM_SIZE 1024
@@ -13,48 +13,49 @@ int main() {
     int shmid;
     char *shmaddr;
 
-    // Generate a unique key
-    if ((key = ftok(".", 'X')) == -1) {
+    // Generate a key for the shared memory segment
+    if ((key = ftok("/tmp", 'A')) == -1) {
         perror("ftok");
-        exit(1);
+        exit(EXIT_FAILURE);
     }
 
-    // Create shared memory segment
+    // Create a shared memory segment
     if ((shmid = shmget(key, SHM_SIZE, IPC_CREAT | 0666)) == -1) {
         perror("shmget");
-        exit(1);
+        exit(EXIT_FAILURE);
     }
 
     // Attach the shared memory segment
     if ((shmaddr = shmat(shmid, NULL, 0)) == (char *) -1) {
         perror("shmat");
-        exit(1);
+        exit(EXIT_FAILURE);
     }
 
-    // Write some data to shared memory
-    strcpy(shmaddr, "Hello, shared memory!");
+    // Write some data to the shared memory
+    strncpy(shmaddr, "Hello, shared memory!", SHM_SIZE);
 
-    printf("Data written to shared memory: %s\n", shmaddr);
-
-    // Attach the shared memory segment with O_RDONLY
-    if ((shmaddr = shmat(shmid, NULL, SHM_RDONLY)) == (char *) -1) {
+    // Attach with O_RDONLY and check if overwriting is possible
+    char *readonly_addr = shmat(shmid, NULL, SHM_RDONLY);
+    if (readonly_addr == (char *) -1) {
         perror("shmat O_RDONLY");
-        exit(1);
+        exit(EXIT_FAILURE);
     }
 
-    printf("Data in read-only mode: %s\n", shmaddr);
+    printf("Data in shared memory (O_RDONLY): %s\n", readonly_addr);
 
     // Detach the shared memory segment
     if (shmdt(shmaddr) == -1) {
         perror("shmdt");
-        exit(1);
+        exit(EXIT_FAILURE);
     }
 
     // Remove the shared memory segment
     if (shmctl(shmid, IPC_RMID, NULL) == -1) {
-        perror("shmctl");
-        exit(1);
+        perror("shmctl IPC_RMID");
+        exit(EXIT_FAILURE);
     }
+
+    printf("Shared memory removed.\n");
 
     return 0;
 }
