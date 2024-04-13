@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <pthread.h>
 #include <semaphore.h>
+#include<unistd.h>
 
 // Semaphores
 sem_t semaphore_A;
