@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <pthread.h>
 #include <semaphore.h>
+#include<unistd.h>
 
 #define NUM_TICKETS 100
 #define NUM_THREADS 10
