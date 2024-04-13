@@ -3,25 +3,51 @@
 
 void print_resource_limit(int resource) {
     struct rlimit rlim;
+    
+    // Get resource limit
     if (getrlimit(resource, &rlim) == 0) {
-        printf("Resource %d limit:\n", resource);
-        printf("  Soft limit: %ld\n", rlim.rlim_cur);
-        printf("  Hard limit: %ld\n", rlim.rlim_max);
+        printf("Resource: ");
+        switch (resource) {
+            case RLIMIT_CORE:
+                printf("Core file size (bytes)\n");
+                break;
+            case RLIMIT_CPU:
+                printf("CPU time (seconds)\n");
+                break;
+            case RLIMIT_DATA:
+                printf("Data segment size (bytes)\n");
+                break;
+            case RLIMIT_FSIZE:
+                printf("File size (bytes)\n");
+                break;
+            case RLIMIT_NOFILE:
+                printf("Number of open files\n");
+                break;
+            case RLIMIT_STACK:
+                printf("Stack size (bytes)\n");
+                break;
+            default:
+                printf("Unknown resource\n");
+                break;
+        }
+
+        // Print soft and hard limits
+        printf("Soft limit: %lu\n", rlim.rlim_cur);
+        printf("Hard limit: %lu\n", rlim.rlim_max);
     } else {
-        perror("getrlimit");
+        printf("Failed to get resource limit\n");
     }
 }
 
 int main() {
-    printf("Printing system resource limits:\n");
-    print_resource_limit(RLIMIT_CPU);       // CPU time limit
-    print_resource_limit(RLIMIT_FSIZE);     // File size limit
-    print_resource_limit(RLIMIT_DATA);      // Data segment size limit
-    print_resource_limit(RLIMIT_STACK);     // Stack size limit
-    print_resource_limit(RLIMIT_CORE);      // Core file size limit
-    print_resource_limit(RLIMIT_RSS);       // Resident set size limit
-    print_resource_limit(RLIMIT_NOFILE);    // Number of open files limit
-    // Add more resource limits as needed
+    // Print resource limits for various resources
+    print_resource_limit(RLIMIT_CORE);
+    print_resource_limit(RLIMIT_CPU);
+    print_resource_limit(RLIMIT_DATA);
+    print_resource_limit(RLIMIT_FSIZE);
+    print_resource_limit(RLIMIT_NOFILE);
+    print_resource_limit(RLIMIT_STACK);
 
     return 0;
 }
+

@@ -3,19 +3,17 @@
 #include <errno.h>
 
 int main() {
-    struct rlimit rlim;
+    struct rlimit rlim; 
 
-    // Define the soft and hard limits
-    rlim.rlim_cur = 1000000;  // Soft limit: 1 million
-    rlim.rlim_max = 1000000;  // Hard limit: 1 million
+    rlim.rlim_cur = 1000000; // allows a soft limit of 1M file descriptors that the process can open.
+    rlim.rlim_max = 1000000; // allows a hard limit of 1M file descriptors that the process can open.
 
-    // Set the resource limit for maximum number of open files (RLIMIT_NOFILE)
-    if (setrlimit(RLIMIT_NOFILE, &rlim) == -1) {
-        perror("setrlimit");
-        return 1;
-    }
+    setrlimit(RLIMIT_NOFILE, &rlim) == -1;  ///set current max 1M open files by the processes.
 
-    printf("Resource limit set successfully.\n");
+    struct rlimit rlim2;
+    getrlimit(RLIMIT_NOFILE, &rlim2); //get current max open files
+
+    printf("Resource limit's, current value is %ld and max value is\n", rlim2.rlim_cur);
 
     return 0;
 }
