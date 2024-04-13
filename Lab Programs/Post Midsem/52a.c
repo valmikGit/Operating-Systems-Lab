@@ -16,7 +16,7 @@ int main() {
     printf("Socket created successfully\n");
 
     struct sockaddr_in serverAddr = {
-        .sin_addr.s = INADDR_ANY,
+        .sin_addr.s_addr = INADDR_ANY, // Change here
         .sin_family = AF_INET,
         .sin_port = htons(8080)
     };
@@ -33,4 +33,14 @@ int main() {
 
     int backlog = 5;
     status = listen(sockfd, backlog);
+
+    if (status == -1)
+    {
+        perror("listen");
+        return 1;
+    }
+    
+    printf("Listening...\n");
+
+    return 0;
 }
