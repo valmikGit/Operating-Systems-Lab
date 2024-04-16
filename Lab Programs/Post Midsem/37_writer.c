@@ -1,32 +1,33 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <unistd.h>
+#include <string.h>
 #include <fcntl.h>
 #include <sys/stat.h>
 #include <sys/types.h>
-#include <string.h>
+#include <unistd.h>
 
-#define FIFO_FILE "myfifo"
+#define FIFO_PATH "/tmp/my_fifo"
 
 int main() {
-    int fd;
-    char *message = "Hello, FIFO!";
+    // Create the FIFO (named pipe)
+    mkfifo(FIFO_PATH, 0666);
 
-    // Create FIFO file
-    mkfifo(FIFO_FILE, 0666);
-
-    // Open FIFO for writing
-    fd = open(FIFO_FILE, O_WRONLY);
+    // Open the FIFO for writing
+    int fd = open(FIFO_PATH, O_WRONLY);
     if (fd == -1) {
         perror("open");
         exit(EXIT_FAILURE);
     }
 
-    // Write message to FIFO
-    write(fd, message, strlen(message) + 1);
-    close(fd);
+    // Write data to the FIFO
+    char message[] = "Hello, FIFO!";
+    if (write(fd, message, strlen(message)) == -1) {
+        perror("write");
+        exit(EXIT_FAILURE);
+    }
 
-    printf("Data written to FIFO successfully.\n");
+    // Close the FIFO
+    close(fd);
 
     return 0;
 }

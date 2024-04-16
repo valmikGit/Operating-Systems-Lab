@@ -1,32 +1,39 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <unistd.h>
 #include <fcntl.h>
 #include <sys/stat.h>
 #include <sys/types.h>
-#include <string.h>
+#include <unistd.h>
 
-#define FIFO_FILE "myfifo"
+#define FIFO_PATH "/tmp/my_fifo"
 
 int main() {
-    int fd;
-    char *message = "Hello, FIFO!";
-
-    // Create FIFO file
-    mkfifo(FIFO_FILE, 0666);
-
-    // Open FIFO for writing
-    fd = open(FIFO_FILE, O_WRONLY);
+    // Open the FIFO for reading
+    int fd = open(FIFO_PATH, O_RDONLY);
     if (fd == -1) {
         perror("open");
         exit(EXIT_FAILURE);
     }
 
-    // Write message to FIFO
-    write(fd, message, strlen(message) + 1);
+    // Read data from the FIFO
+    char buffer[256];
+    ssize_t bytes_read = read(fd, buffer, sizeof(buffer));
+    if (bytes_read == -1) {
+        perror("read");
+        exit(EXIT_FAILURE);
+    }
+
+    // Null-terminate the string
+    buffer[bytes_read] = '\0';
+
+    // Display the message received from the FIFO
+    printf("Message received from FIFO: %s\n", buffer);
+
+    // Close the FIFO
     close(fd);
 
-    printf("Data written to FIFO successfully.\n");
+    // Remove the FIFO (optional)
+    unlink(FIFO_PATH);
 
     return 0;
 }

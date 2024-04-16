@@ -1,32 +1,33 @@
-#include<sys/types.h>
-#include<sys/socket.h>
-#include<netinet/in.h>
-#include<unistd.h>
-#include<stdio.h>
-#include<fcntl.h>
-#include<stdlib.h>
-#include<sys/stat.h>
+#include <stdio.h>
+#include <unistd.h>
+#include <stdlib.h>
+#include <sys/socket.h>
+#include <arpa/inet.h>
+#include <netinet/in.h>
 
-int main() {
-    struct sockaddr_in server, client;
-    int sd, sz, nsd;
-    char buff[80];
+int main()
+{
+    struct sockaddr_in serv;
+    int sd;
 
-    sd = socket(AF_UNIX, SOCK_STREAM, 0);
+    sd = socket(AF_INET, SOCK_STREAM, 0);
+    serv.sin_family = AF_INET;
+    serv.sin_addr.s_addr = inet_addr("127.0.0.1");
+    serv.sin_port = htons(5000);
 
-    server.sin_family = AF_UNIX;
-    server.sin_addr.s_addr = INADDR_ANY;
-    server.sin_port = htonl(5555);
-
-    connect(sd, (struct sockaddr *)(&server), sizeof(server));
-
+    connect(sd, (struct sockaddr *)&serv, sizeof(serv));
+    
+    // read/write
+    char buf[100];
+    int ret;
+    write(1, "Sending message to server...\n", sizeof("Sending message to server...\n"));
+    write(sd, "Message From client\n", sizeof("Message From client\n"));
+    write(1, "Sent!\nPress return key to read...\n", sizeof("Sent!\nPress return key to read...\n"));
     getchar();
-    write(sd, "HI SERVER\n", sizeof("HI SERVER\n"));
-    read(sd, buff, sizeof(buff));
-    printf("MESSAGE FROM SERVER: %s\n", buff);
-
-    printf("Press [Enter] to exit.............\n");
-    getchar();
-
+    ret = read(sd, buf, sizeof(buf));
+    write(1, buf, ret);
+    
     close(sd);
+
+    return (0);
 }
