@@ -1,19 +1,30 @@
 #include <stdio.h>
 #include <sys/resource.h>
-#include <errno.h>
+#include <unistd.h>
 
 int main() {
-    struct rlimit rlim; 
+    struct rlimit r_limit;
 
-    rlim.rlim_cur = 1000000; // allows a soft limit of 1M file descriptors that the process can open.
-    rlim.rlim_max = 1000000; // allows a hard limit of 1M file descriptors that the process can open.
+    // Get the current limits
+    if (getrlimit(RLIMIT_NOFILE, &r_limit) == 0) {
+        printf("Current soft limit for number of open files: %ld\n", r_limit.rlim_cur);
+        printf("Current hard limit for number of open files: %ld\n", r_limit.rlim_max);
+    } else {
+        perror("getrlimit");
+        return 1;
+    }
 
-    setrlimit(RLIMIT_NOFILE, &rlim) == -1;  ///set current max 1M open files by the processes.
+    // Set new limits
+    r_limit.rlim_cur = 1024; // Soft limit
+    r_limit.rlim_max = 2048; // Hard limit
 
-    struct rlimit rlim2;
-    getrlimit(RLIMIT_NOFILE, &rlim2); //get current max open files
-
-    printf("Resource limit's, current value is %ld and max value is\n", rlim2.rlim_cur);
+    if (setrlimit(RLIMIT_NOFILE, &r_limit) == 0) {
+        printf("New soft limit for number of open files: %ld\n", r_limit.rlim_cur);
+        printf("New hard limit for number of open files: %ld\n", r_limit.rlim_max);
+    } else {
+        perror("setrlimit");
+        return 1;
+    }
 
     return 0;
 }
