@@ -1,15 +1,15 @@
-name: CICD for OS Lab Programs
+name: CICD for Food Project Frontend
 on:
   push:
-    branches: [main]
+    branches: [master]
     paths:
       - Lab_Programs/Post_Midsem/**
       - Lab_Programs/Pre_Midsem/**
   pull_request:
-    branches: [main]
+    branches: [master]
     paths:
-      - Lab_Programs/Pre_Midsem/**
       - Lab_Programs/Post_Midsem/**
+      - Lab_Programs/Pre_Midsem/**
   workflow_dispatch:
 
 jobs:
@@ -26,7 +26,7 @@ jobs:
 
       - name: Check compilation
         run: |
-          cd "Post Midem"
+          cd Lab_Programs/Post_Midsem/
           gcc *.c
 
     #   - name: Log files in pwd
