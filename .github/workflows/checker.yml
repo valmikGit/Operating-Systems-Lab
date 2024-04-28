@@ -1,4 +1,4 @@
-name: CICD for Food Project Frontend
+name: Workflows for OS Lab Programs
 on:
   push:
     branches: [main]
@@ -27,6 +27,7 @@ jobs:
       - name: Check compilation
         run: |
           cd Lab_Programs/Post_Midsem/
+          ls
           gcc *.c
 
     #   - name: Log files in pwd
