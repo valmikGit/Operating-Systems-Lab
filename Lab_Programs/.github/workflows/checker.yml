@@ -1,15 +1,15 @@
-name: CICD for Food Project Frontend
+name: CICD for OS Lab Programs
 on:
   push:
     branches: [main]
     paths:
-      - "Lab Programs"/"Post Midsem"/**
-      - "Lab Programs"/"Pre Midsem"/**
+      - Lab_Programs/Post_Midsem/**
+      - Lab_Programs/Pre_Midsem/**
   pull_request:
     branches: [main]
     paths:
-      - "Lab Programs"/"Pre Midsem"/**
-      - "Lab Programs"/"Post Midsem"/**
+      - Lab_Programs/Pre_Midsem/**
+      - Lab_Programs/Post_Midsem/**
   workflow_dispatch:
 
 jobs:
