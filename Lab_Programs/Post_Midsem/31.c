@@ -5,6 +5,8 @@
 
 #define BUFFER_SIZE 256
 
+// Ignore this comment.
+
 int main() {
     int pipefd[2]; // File descriptors for the pipe
     char buffer[BUFFER_SIZE];
