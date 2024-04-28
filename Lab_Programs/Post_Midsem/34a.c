@@ -2,6 +2,8 @@
 #include <stdlib.h>
 #include <unistd.h>
 
+// Ignore this comment.
+
 int main() {
     int pipefd[2];
     pid_t pid;
