@@ -1,12 +1,3 @@
-/*
-Program Number : 22
-Name : Vidhish Trivedi
-Register Number : IMT2021055
-Date : 30/03/2023
-Description : Program to wait for data to be written into FIFO within 10 seconds, use select
-              system call with FIFO.
-*/
-
 #include <stdio.h>
 #include <unistd.h>
 #include <sys/stat.h>
@@ -16,6 +7,7 @@ Description : Program to wait for data to be written into FIFO within 10 seconds
 #include <sys/time.h>
 
 // Use 22_write.c as writer.
+//doubt
 int main()
 {
     fd_set rfds;

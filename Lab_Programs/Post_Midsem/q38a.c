@@ -23,21 +23,6 @@ int main() {
     while (1) {
         char buffer[256];
 
-        // Get input from the client
-        printf("Client: ");
-        fgets(buffer, sizeof(buffer), stdin);
-
-        // Write to the FIFO
-        if (write(fd, buffer, strlen(buffer)) == -1) {
-            perror("write");
-            exit(EXIT_FAILURE);
-        }
-
-        // Check if the client wants to exit
-        if (strcmp(buffer, "exit") == 0) {
-            break;
-        }
-
         // Read from the FIFO
         ssize_t bytes_read = read(fd, buffer, sizeof(buffer));
         if (bytes_read == -1) {
@@ -48,12 +33,30 @@ int main() {
         // Null-terminate the string
         buffer[bytes_read] = '\0';
 
-        // Display the message received from the server
-        printf("Server: %s\n", buffer);
+        // Display the message received from the client
+        printf("Client: %s\n", buffer);
+
+        // Check if the client wants to exit
+        if (strcmp(buffer, "exit") == 0) {
+            break;
+        }
+
+        // Get input from the server
+        printf("Server: ");
+        fgets(buffer, sizeof(buffer), stdin);
+
+        // Write to the FIFO
+        if (write(fd, buffer, strlen(buffer)) == -1) {
+            perror("write");
+            exit(EXIT_FAILURE);
+        }
     }
 
     // Close the FIFO
     close(fd);
+
+    // Remove the FIFO
+    unlink(FIFO_PATH);
 
     return 0;
 }

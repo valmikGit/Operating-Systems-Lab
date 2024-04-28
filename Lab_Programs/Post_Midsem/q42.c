@@ -5,13 +5,13 @@
 #include <sys/msg.h>
 #include <time.h>
 
-int main() {
+int main(){
     key_t key;
     int msgid;
     struct msqid_ds buf;
 
     // Generate a key for the message queue
-    if ((key = ftok("/tmp", 'A')) == -1) {
+    if ((key = ftok(".", 'a')) == -1) {
         perror("ftok");
         exit(EXIT_FAILURE);
     }
@@ -43,7 +43,7 @@ int main() {
     printf("Time of last change in the message queue: %s", ctime(&buf.msg_ctime));
 
     // Size of the queue
-    printf("Size of the queue: %ld bytes\n", buf.msg_qbytes);
+    printf("Size of the queue: %ld bytes\n", buf.__msg_cbytes);
 
     // Number of messages in the queue
     printf("Number of messages in the queue: %ld\n", buf.msg_qnum);
@@ -55,5 +55,4 @@ int main() {
     printf("PID of the msgsnd: %d\n", buf.msg_lspid);
     printf("PID of the msgrcv: %d\n", buf.msg_lrpid);
 
-    return 0;
 }
