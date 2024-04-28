@@ -5,6 +5,8 @@
 
 #define BUFFER_SIZE 256
 
+// Ignore this comment
+
 int main() {
     int parent_to_child_pipe[2]; // Pipe for communication from parent to child
     int child_to_parent_pipe[2]; // Pipe for communication from child to parent
