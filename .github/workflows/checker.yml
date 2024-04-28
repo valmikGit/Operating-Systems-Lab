@@ -1,12 +1,12 @@
 name: CICD for Food Project Frontend
 on:
   push:
-    branches: [master]
+    branches: [main]
     paths:
       - Lab_Programs/Post_Midsem/**
       - Lab_Programs/Pre_Midsem/**
   pull_request:
-    branches: [master]
+    branches: [main]
     paths:
       - Lab_Programs/Post_Midsem/**
       - Lab_Programs/Pre_Midsem/**
