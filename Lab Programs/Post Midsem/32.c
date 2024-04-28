@@ -3,6 +3,8 @@
 #include <unistd.h>
 #include <string.h>
 
+// Ignore this comment.
+
 #define BUFFER_SIZE 256
 
 int main() {
