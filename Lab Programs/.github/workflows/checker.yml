@@ -3,13 +3,13 @@ on:
   push:
     branches: [main]
     paths:
-      - "Post Midsem"/**
-      - "Pre Midsem"/**
+      - "Lab Programs"/"Post Midsem"/**
+      - "Lab Programs"/"Pre Midsem"/**
   pull_request:
     branches: [main]
     paths:
-      - "Pre Midsem"/**
-      - "Post Midsem"/**
+      - "Lab Programs"/"Pre Midsem"/**
+      - "Lab Programs"/"Post Midsem"/**
   workflow_dispatch:
 
 jobs:
