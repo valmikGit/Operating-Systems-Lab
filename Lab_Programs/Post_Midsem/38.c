@@ -7,8 +7,8 @@
 
 int main()
 {
-    // int res = mkfifo("myFifo", S_IFIFO | 0666);
-    // int res = mkfifo("yourFifo", S_IFIFO | 0666);
+    int res1 = mkfifo("myFifo", S_IFIFO | 0666);
+    int res2 = mkfifo("yourFifo", S_IFIFO | 0666);
 
     int choice = 0;
     printf("1.\t read/write (program 1)\n2.\t read/write (program 2)\n\t Enter choice: ");
