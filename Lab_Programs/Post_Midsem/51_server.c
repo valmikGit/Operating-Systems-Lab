@@ -18,7 +18,48 @@ int main()
     struct sockaddr_in serv, cli;
     int sd;
     sd = socket(AF_INET, SOCK_STREAM, 0);
-    serv.sin_family = AF_INET;
+    serv.sin_family = AF_INET;#include <netinet/in.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <sys/socket.h>
+#include <unistd.h>
+#include <arpa/inet.h>
+int main(){
+    int sock_fd=socket(AF_INET,SOCK_STREAM,0);
+    if(sock_fd==0){
+        perror("socket");
+        return -1;
+    }
+    struct sockaddr_in server;
+    server.sin_family=AF_INET;
+    server.sin_port=htons(8080);
+    server.sin_addr.s_addr=INADDR_ANY;
+    if(bind(sock_fd,(struct sockaddr*)&server,sizeof(server))<0){
+        perror("bind");
+        return -1;
+    }
+    if(listen(sock_fd,1)<0){
+        perror("listen");
+        return -1;
+    }
+    while (1)
+    {
+        struct sockaddr_in client;
+        socklen_t client_len=sizeof(client);
+        int newfd=accept(sock_fd,(struct sockaddr*)&client,&client_len);
+        if(newfd<0){
+            perror("accept");
+            return -1;
+        }
+        char buffer[1024]="Hello from server";
+        send(newfd,buffer,1024,0);
+        recv(newfd,buffer,1024,0);
+        printf("Received %s from %s\n",buffer,inet_ntoa(client.sin_addr));
+    }
+    
+
+}
     serv.sin_addr.s_addr = INADDR_ANY;
     serv.sin_port = htons(5000);
     
