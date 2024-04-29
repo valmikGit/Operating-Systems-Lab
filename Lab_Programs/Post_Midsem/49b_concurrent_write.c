@@ -1,12 +1,3 @@
-/*
-Program Number : 32 - b
-Name : Vidhish Trivedi
-Register Number : IMT2021055
-Date : 08/04/2023
-Description : Program to implement semaphore to protect any critical section.
-                b. protect shared memory from concurrent write access
-*/
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
