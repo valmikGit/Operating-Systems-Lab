@@ -26,7 +26,7 @@ int main() {
     } else {
         // Parent process
         printf("Parent process (PID: %d) created.\n", getpid());
-
+        while(1){}
         // Orphan process - parent exits immediately
         printf("Parent process exits, creating an orphan process.\n");
         exit(0);
